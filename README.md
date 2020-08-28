@@ -21,6 +21,7 @@ java.net.MalformedURLException: no protocol 에러가 뜨는 상황이 발생한
 따로 JSON을 생성해야 할 것 같다ㅠㅠ 
 
 **TMDB API를 발견했다!.! 영어로 되어있긴한데 아 몰라 일단 트라이**        
+    
 **08-27 02:00 TMDB는 나한테 필요한 모든 정보가 들어있다.    
 영화 관련 OPEN API가 필요하다면 TMDB API를 쓰진 않더라도 꼭 살펴보길 바랍니다.**    
     
