@@ -109,6 +109,8 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
         try {
             Log.d("JSON STRING", json);
             JSONObject jsonObject = new JSONObject(json);
+            int nowPage = jsonObject.getInt("page");
+            int totalPages = jsonObject.getInt("total_pages");
             JSONArray movieArray = jsonObject.getJSONArray("results");
             for(int i = 0; i < movieArray.length(); i++){
                 JSONObject movieObject = movieArray.getJSONObject(i);
@@ -162,4 +164,21 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
         }
         return returnList;
     }
+
+    private boolean hasMorePage(String json){
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            int nowPage = jsonObject.getInt("page");
+            int totalPages = jsonObject.getInt("total_pages");
+            if(nowPage < totalPages){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

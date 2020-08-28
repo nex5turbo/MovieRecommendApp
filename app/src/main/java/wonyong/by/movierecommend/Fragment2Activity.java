@@ -1,7 +1,7 @@
 package wonyong.by.movierecommend;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,7 +11,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,24 +24,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
-/*
-Naver Movie Search API
-Client ID : YUOz3v1oFnNd9meSfC6t
-Client Password : j3mHCWXLxM
-
-영화진흥 위원회 API
-KEY : 927f426e5914b98a82fe8636620488b5
-&curPage=1&itemPerPage=100
- */
-
-
-public class MainActivity extends AppCompatActivity {
+public class Fragment2Activity extends Fragment {
 
     Constants CONST = new Constants();
     EditText movieNameText;
     Button searchButton;
-    Context thisContext = this;
+    Context thisContext = getActivity();
     ArrayList<MovieRecyclerData> data = new ArrayList<MovieRecyclerData>();
     MovieRecyclerAdapter adapter;
     RecyclerView recyclerView;
@@ -52,18 +44,23 @@ public class MainActivity extends AppCompatActivity {
     final Drawable searchEndDrawable = new ColorDrawable(searchEndColor);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState){
+        View root = inflater.inflate(R.layout.activity_fragment2, container, false);
+        return root;
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
         initWidget();
         initListener();
         initRecyclerView();
-
     }
 
     private void initRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new MovieRecyclerAdapter(data);
         recyclerView.setAdapter(adapter);
@@ -103,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                             for(MovieRecyclerData tmp : data){
                                 Log.d("###after", tmp.title);
                             }
-                            runOnUiThread(new Runnable() {
+                            getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     recyclerView.setAdapter(null);
@@ -128,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requireText() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("검색어가 비었습니다.");
         builder.setMessage("검색어를 입력하세요.");
         builder.setPositiveButton("예",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
                         imm.showSoftInput(movieNameText, 0);
                     }
                 });
@@ -142,27 +139,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWidget() {
-        movieNameText = findViewById(R.id.movieNameTexxt);
-        searchButton = findViewById(R.id.serachButton);
-        recyclerView = findViewById(R.id.recyclerView2);
-        progressBar = findViewById(R.id.progressBar);
+        movieNameText = getActivity().findViewById(R.id.movieNameTexxt2);
+        searchButton = getActivity().findViewById(R.id.serachButton2);
+        recyclerView = getActivity().findViewById(R.id.recyclerView2);
+        progressBar = getActivity().findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
     }
-
 }
-
-/*
-  String text = URLEncoder.encode(searchObject, "UTF-8");
-                    String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text + "&display=" + display + "&"; // json 결과
-                    // Json 형태로 결과값을 받아옴.
-                    URL url = new URL(apiURL);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("GET");
-                    con.setRequestProperty("X-Naver-Client-Id", clientId);
-                    con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
-                    con.connect();
-
-
-
-출처: https://hyongdoc.tistory.com/167 [Doony Garage]
- */
