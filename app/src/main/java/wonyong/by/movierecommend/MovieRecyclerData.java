@@ -36,6 +36,7 @@ public class MovieRecyclerData {
      */
 
     public MovieRecyclerData(int id, String title, String original_title, String original_language, String release_date, ArrayList<Integer> genre_ids, Bitmap poster, boolean adult, String overview, int vote_count, float vote_average, float popularity){
+        this.id = id;
         this.title = title;
         this.original_title = original_title;
         this.original_language = original_language;

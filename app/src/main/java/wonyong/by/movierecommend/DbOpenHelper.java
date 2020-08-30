@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.ByteArrayOutputStream;
 
 public class DbOpenHelper {
     private  static final String DATABASE_NAME = "InnerDatabase(SQLite).db";
@@ -48,15 +52,24 @@ public class DbOpenHelper {
         mDB.close();
     }
 
-    public long insertColumn(String movienm, String movienmen, int opendt, String prdtstatnm, String repnationnm, String repgenrenm){
+    public long insertColumn(String ID, String title, int opendt, String prdtstatnm, String repnationnm, Bitmap poster){
         ContentValues values = new ContentValues();
-        values.put(DataBase.CreateDB.MOVIENM, movienm);
-        values.put(DataBase.CreateDB.MOVIENMEN, movienmen);
-        values.put(DataBase.CreateDB.OPENDT, opendt);
-        values.put(DataBase.CreateDB.PRDTSTATNM, prdtstatnm);
-        values.put(DataBase.CreateDB.REPNATIONNM, repnationnm);
-        values.put(DataBase.CreateDB.REPGENRENM, repgenrenm);
+        values.put(DataBase.CreateDB.ID, ID);
+        values.put(DataBase.CreateDB.TITLE, title);
+        byte[] posterByte = getBytes(poster);
+        values.put(DataBase.CreateDB.POSTER, posterByte);
         return mDB.insert(DataBase.CreateDB._TABLENAME0, null, values);
+    }
+
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
 }

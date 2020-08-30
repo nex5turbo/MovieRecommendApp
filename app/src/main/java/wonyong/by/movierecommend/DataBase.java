@@ -12,19 +12,16 @@ repNationNm 제작국가
 repGenreNm 장르
  */
     public static final class CreateDB implements BaseColumns{
-        public static final String MOVIENM = "movienm";
-        public static final String MOVIENMEN = "movienmen";
-        public static final String OPENDT = "opendt";
-        public static final String PRDTSTATNM = "prdtstatnm";
-        public static final String REPNATIONNM = "repnationnm";
-        public static final String REPGENRENM = "repgenrenm";
-        public static final String _TABLENAME0 = "usertable";
+        public static final String ID = "id";
+        public static final String TITLE = "title";
+//        public static final String OPENDT = "opendt";
+//        public static final String GENRE = "genre";
+//        public static final String VOTEAVG = "voteavg";
+        public static final String POSTER = "poster";
+        public static final String _TABLENAME0 = "postertable";
         public static final String _CREATE0 = "create table if not exists "+_TABLENAME0+"("
-                +MOVIENM+" primary key , "
-                +MOVIENMEN+" text not null , "
-                +OPENDT+" integer , "
-                +PRDTSTATNM+" text not null , "
-                +REPNATIONNM+" text not null , "
-                +REPGENRENM+" text not null );";
+                + ID +" primary key , "
+                + TITLE +" text not null , "
+                + POSTER +" blob not null );";
     }
 }

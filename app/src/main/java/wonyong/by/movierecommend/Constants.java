@@ -6,9 +6,10 @@ import java.util.Map;
 public class Constants {
     public final String NAVER_ID = "YUOz3v1oFnNd9meSfC6t"; //deprecated
     public final String NAVER_PWD = "j3mHCWXLxM"; //deprecated
-    public final String MOVIE_KEY = "927f426e5914b98a82fe8636620488b5"; //deprecated
-    public final String MOVIE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json"; //deprecated
+    public final String MOVIE_BOXOFFICE_KEY = "927f426e5914b98a82fe8636620488b5"; //deprecated
+    public final String MOVIE_BOXOFFICE_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?"; //deprecated
     public final String TMDB_MOVIE_SEARCH_URL = "https://api.themoviedb.org/3/search/movie?";
+    public final String TMDB_MOVIE_SIMILAR_SEARCH_URL = "https://api.themoviedb.org/3/movie/"; //need movie_id
     public final String TMDB_POSTER_URL = "http://image.tmdb.org/t/p/w185";
     public final String NO_POSTER_URL = "https://folo.co.kr/img/gm_noimage.png";
     public final String TMBD_KEY = "c0e0fe5d77f2d08e7948ca71987e4caf";
@@ -42,6 +43,10 @@ public class Constants {
     public final int TYPE_NAVER = 1; //deprecated
     public final int TYPE_SERVER = 2;
     public final int TYPE_SEARCH_TMDB = 3;
+    public final int TYPE_SEARCH_SIMILAR_TMDB = 4;
+    public final int TYPE_NUMBER_PAGES = 5;
+    public final int TYPE_RANK = 6;
+
 
     public String getGenre(int genre_ids){return GENRES_MAP.get(genre_ids);}
 

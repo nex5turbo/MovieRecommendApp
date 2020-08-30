@@ -16,11 +16,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position){
         switch(position){
             case 0:
-                FragmentActivity tab1 = new FragmentActivity();
-                return tab1;
+                MainFragment mainFragment = new MainFragment();
+                return mainFragment;
             case 1:
-                Fragment2Activity tab2 = new Fragment2Activity();
-                return tab2;
+                SearchFragment searchFragment = new SearchFragment();
+                return searchFragment;
+            case 2:
+                SearchPeopleFragment searchPeopleFragment = new SearchPeopleFragment();
+                return searchPeopleFragment;
             default:
                 return null;
         }

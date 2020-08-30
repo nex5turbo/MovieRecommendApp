@@ -16,9 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -64,13 +62,24 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
         String result = "success";
 
         if(TYPE == CONST.TYPE_SEARCH_TMDB){
-            result = getJson(urls);
-            ArrayList<MovieRecyclerData> returnList = parsingTMDBJSON(result);
+            String json = getJson(urls);
+            ArrayList<MovieRecyclerData> returnList = parsingTMDBJSON(json);
             return returnList;
         }else if(TYPE == CONST.TYPE_SERVER){
             result = getJson(urls);
+        }else if(TYPE == CONST.TYPE_NUMBER_PAGES){
+            String json = getJson(urls);
+            int pages = numOfPages(json);
+            return pages;
+        }else if(TYPE == CONST.TYPE_RANK){//
+            String json = getJson(urls);
+            ArrayList<MovieRankRecyclerData> returnList = parsingRankJSON(json);
+            return returnList;
+        }else if(TYPE == CONST.TYPE_SEARCH_SIMILAR_TMDB){
+            String json = getJson(urls);
+            ArrayList<MovieRecyclerData> returnList = parsingTMDBJSON(json);
+            return returnList;
         }
-
         return result;
     }
 
@@ -99,7 +108,6 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         return result;
     }
@@ -107,19 +115,20 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
     private ArrayList<MovieRecyclerData> parsingTMDBJSON(String json){
         ArrayList<MovieRecyclerData> returnList = new ArrayList<MovieRecyclerData>();
         try {
-            Log.d("JSON STRING", json);
             JSONObject jsonObject = new JSONObject(json);
-            int nowPage = jsonObject.getInt("page");
-            int totalPages = jsonObject.getInt("total_pages");
             JSONArray movieArray = jsonObject.getJSONArray("results");
             for(int i = 0; i < movieArray.length(); i++){
                 JSONObject movieObject = movieArray.getJSONObject(i);
 
                 int id = Integer.parseInt(movieObject.getString("id"));
+
                 String title = movieObject.getString("title");
                 String original_title = movieObject.getString("original_title");
                 String original_language = movieObject.getString("original_language");
-                String release_date = movieObject.getString("release_date");
+                String release_date = "";
+                if(movieObject.has("release_date")){
+                    release_date = movieObject.getString("release_date");
+                }
 
                 ArrayList<Integer> genre_ids = new ArrayList<Integer>();
                 String strGenre = movieObject.getString("genre_ids");
@@ -165,20 +174,38 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
         return returnList;
     }
 
-    private boolean hasMorePage(String json){
+    private ArrayList<MovieRankRecyclerData> parsingRankJSON(String json){
+        ArrayList<MovieRankRecyclerData> returnList = new ArrayList<MovieRankRecyclerData>();
         try {
             JSONObject jsonObject = new JSONObject(json);
-            int nowPage = jsonObject.getInt("page");
-            int totalPages = jsonObject.getInt("total_pages");
-            if(nowPage < totalPages){
-                return true;
-            }else{
-                return false;
+            JSONObject resultObject = jsonObject.getJSONObject("boxOfficeResult");
+            JSONArray dailyArray = resultObject.getJSONArray("dailyBoxOfficeList");
+
+            for(int i = 0; i < 5; i++){
+                JSONObject temp = dailyArray.getJSONObject(i);
+                String title = temp.getString("movieNm");
+                String openDate = temp.getString("openDt");
+                String totalSales = temp.getString("salesAcc");
+                String totalAudience = temp.getString("audiAcc");
+                String rank = temp.getString("rank");
+                MovieRankRecyclerData tempData = new MovieRankRecyclerData(title, openDate, totalSales, totalAudience, rank);
+                returnList.add(tempData);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return false;
+        return returnList;
+    }
+
+    private int numOfPages(String json){
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            int totalPages = jsonObject.getInt("total_pages");
+            return totalPages;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }

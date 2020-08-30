@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,11 +15,24 @@ import java.util.ArrayList;
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>{
 
 
+
     private Constants CONST = new Constants();
     private ArrayList<MovieRecyclerData> items;
 
     public MovieRecyclerAdapter(ArrayList<MovieRecyclerData> items){
         this.items = items;
+    }
+
+    private MovieRecyclerAdapter.OnItemClickListener mListener = null;
+
+    // OnItemClickListener 객체 참조를 어댑터에 전달하는 메서드
+    public void setOnItemClickListener(MovieRecyclerAdapter.OnItemClickListener listener)
+    {
+        this.mListener = listener;
+    }
+    public interface OnItemClickListener
+    {
+        void onItemClick(View v, int pos);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -35,6 +49,16 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             openDate = itemView.findViewById(R.id.recyclerMovieOpendate);
             country = itemView.findViewById(R.id.recyclerMovieCountry);
             thumnail = itemView.findViewById(R.id.recyclerMovieThumbnail);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        mListener.onItemClick(view,pos);
+                    }
+                }
+            });
         }
     }
 
@@ -43,7 +67,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recycler_item, parent, false);
+        View view = inflater.inflate(R.layout.movie_recycler_item, parent, false);
         MovieRecyclerAdapter.MyViewHolder vh = new MovieRecyclerAdapter.MyViewHolder(view);
 
         return vh;
