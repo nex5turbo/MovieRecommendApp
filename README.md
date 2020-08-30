@@ -37,3 +37,33 @@ java.net.MalformedURLException: no protocol 에러가 뜨는 상황이 발생한
 뷰페이저를 통해 슬라이딩 메뉴도 지원하고 코드도 최대한 간결하게 만들어보려고 한다.    
 앱단에서의 작업은 중반정도 달리고 있는 것 같다. 현재 코드 작성 상태는 짬뽕코드지만(클래스명도 다 개판이다.),     
 화면 구성과 기능들을 좀 더 구현한뒤에 코드를 좀 깔끔하게 정리해야겠다.
+
+## RecyclerView Paging
+영화 검색, 박스오피스(이 부분은 아직 생각이 많다... 박스오피스 관련 정보는 tmdb에 없는데 영화진흥위원회에서 받아오면
+이미지 파일이 없기 때문에.... 어떻게 해야할지 생각을 좀 더 해봐야겠다. 일단 페이징은 완료했다.), 비슷한 영화 찾기
+부분까지 완료를 했다. 비슷한 영화 찾는건 졸작때 했던 dp, pixel 변환을 통해 동적으로 핸드폰 사이즈에 맞춰서
+리사이클러뷰로 표시를 해주었다.
+
+오늘(08.30)은 앞서 적어두었던 목록이 20개가 넘어갈 때 한번에 로딩하면 시간이 너무 오래걸리는 부분에 대해서 해결했다.
+리사이클러뷰 무한 스크롤!! 먼저 20개의 목록을 받아둔 뒤 그 다음 페이지에 대한 정보는 받지 않는다.
+그리고 사용자가 리사이클러뷰에 대해 마지막 인덱스에 접근하면 다음 검색 결과 페이지를 접근하여 정보를 받아온다.
+이 부분은 생각보다 간단했다.
+
+
+```
+myList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+       @Override
+       public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+           if (!myList.canScrollVertically(-1)) {
+               Log.i(TAG, "Top of list");
+           } else if (!myList.canScrollVertically(1)) {
+               Log.i(TAG, "End of list");
+           } else {
+               Log.i(TAG, "idle");
+           }
+       }
+   });
+```
+위 코드는 [이 블로그](https://medium.com/@ydh0256/android-recyclerview-%EC%9D%98-%EC%B5%9C%EC%83%81%EB%8B%A8%EA%B3%BC-%EC%B5%9C%ED%95%98%EB%8B%A8-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EA%B0%90%EC%A7%80%ED%95%98%EA%B8%B0-f0e5fda34301)에 있는 코드이다.
+리사이클러뷰에 setOnScrollListener를 붙여서 리사이클러뷰가 더 이상 스크롤 가능한지 확인한다음 스크롤이 더이상 안된다면
+마지막 인덱스에 접근한 상태이기 때문에 다음 페이지를 로딩하는 방식이다.
