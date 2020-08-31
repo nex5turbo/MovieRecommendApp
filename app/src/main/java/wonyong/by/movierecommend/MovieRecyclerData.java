@@ -18,6 +18,7 @@ public class MovieRecyclerData {
     public int vote_count;
     public float vote_average;
     public float popularity;
+    String posterUrl;
 
     /*
                 id : int
@@ -35,7 +36,8 @@ public class MovieRecyclerData {
 
      */
 
-    public MovieRecyclerData(int id, String title, String original_title, String original_language, String release_date, ArrayList<Integer> genre_ids, Bitmap poster, boolean adult, String overview, int vote_count, float vote_average, float popularity){
+    public MovieRecyclerData(int id, String title, String original_title, String original_language, String release_date, ArrayList<Integer> genre_ids, Bitmap poster, boolean adult, String overview, int vote_count, float vote_average, float popularity,
+                             String posterUrl){
         this.id = id;
         this.title = title;
         this.original_title = original_title;
@@ -48,5 +50,6 @@ public class MovieRecyclerData {
         this.vote_count = vote_count;
         this.vote_average = vote_average;
         this.popularity = popularity;
+        this.posterUrl = posterUrl;
     }
 }

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 public class InformationDialog extends Dialog {
     TextView titleText, releaseText, overviewText, genreText, vote_averageText;
     ImageView posterImageView;
@@ -52,7 +54,7 @@ public class InformationDialog extends Dialog {
         overviewText.setText(overviewTemp);
         overviewText.setMovementMethod(new ScrollingMovementMethod());
 
-        posterImageView.setImageBitmap(Bitmap.createScaledBitmap(data.poster, 480, 720, false));
+        Glide.with(getContext()).load(data.posterUrl).override(480, 720).into(posterImageView);
 
         closeButton.setOnClickListener(new View.OnClickListener(){
             @Override

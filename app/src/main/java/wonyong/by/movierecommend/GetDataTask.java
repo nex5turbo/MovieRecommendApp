@@ -140,22 +140,25 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
 
                 String poster_path = movieObject.getString("poster_path");
                 String strImageURL = CONST.TMDB_POSTER_URL+poster_path;
-                URL imageurl = null;
                 if(poster_path.equals("null")){
-                    imageurl = new URL(CONST.NO_POSTER_URL);
-                }else {
-                    try {
-                        imageurl = new URL(strImageURL);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
+                    strImageURL = CONST.NO_POSTER_URL;
                 }
-                HttpURLConnection con = (HttpURLConnection) imageurl.openConnection();
-                con.setDoInput(true);
-                con.connect();
-                InputStream input = con.getInputStream();
-                Bitmap poster = BitmapFactory.decodeStream(input);
-                con.disconnect();
+//                URL imageurl = null;
+//                if(poster_path.equals("null")){
+//                    imageurl = new URL(CONST.NO_POSTER_URL);
+//                }else {
+//                    try {
+//                        imageurl = new URL(strImageURL);
+//                    } catch (MalformedURLException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                HttpURLConnection con = (HttpURLConnection) imageurl.openConnection();
+//                con.setDoInput(true);
+//                con.connect();
+//                InputStream input = con.getInputStream();
+//                Bitmap poster = BitmapFactory.decodeStream(input);
+//                con.disconnect();
 
                 boolean adult = Boolean.getBoolean(movieObject.getString("adult"));
                 String overview = movieObject.getString("overview");
@@ -163,12 +166,10 @@ public class GetDataTask extends AsyncTask<URL, Integer, Object> {
                 float vote_average = Float.parseFloat(movieObject.getString("vote_average"));
                 float popularity = Float.parseFloat(movieObject.getString("popularity"));
 
-                MovieRecyclerData movieData = new MovieRecyclerData(id, title, original_title, original_language, release_date, genre_ids, poster, adult, overview, vote_count, vote_average, popularity);
+                MovieRecyclerData movieData = new MovieRecyclerData(id, title, original_title, original_language, release_date, genre_ids, null, adult, overview, vote_count, vote_average, popularity, strImageURL);
                 returnList.add(movieData);
             }
         }catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         return returnList;

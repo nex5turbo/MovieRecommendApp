@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SearchPeopleFragment"></activity>
         <activity android:name=".SimilarActivity" />
         <activity
             android:name=".PagerFragment"

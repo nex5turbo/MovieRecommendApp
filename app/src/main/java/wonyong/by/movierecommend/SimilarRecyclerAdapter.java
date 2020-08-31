@@ -2,6 +2,7 @@ package wonyong.by.movierecommend;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -57,9 +60,12 @@ public class SimilarRecyclerAdapter extends RecyclerView.Adapter<SimilarRecycler
         int widthDp = displayInfo.getDeviceWidthDp();
         int sectionPixel = displayInfo.getPixelfromDp((widthDp-24)/2);
 
+        String color = "#FFFFFF";
         holder.title.setMaxWidth(sectionPixel);
+        holder.title.setTextColor(Color.parseColor(color));
 
-        holder.poster.setImageBitmap(Bitmap.createScaledBitmap(data.poster, sectionPixel, (int)(sectionPixel*1.5), false));
+        Glide.with(holder.itemView).load(data.posterUrl).centerCrop().override(sectionPixel, (int)(sectionPixel*1.5)).into(holder.poster);
+//        holder.poster.setImageBitmap(Bitmap.createScaledBitmap(data.poster, sectionPixel, (int)(sectionPixel*1.5), false));
     }
 
     @Override

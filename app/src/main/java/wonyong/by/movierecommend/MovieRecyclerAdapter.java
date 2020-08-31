@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdapter.MyViewHolder>{
@@ -87,7 +89,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             genre = genre+" "+CONST.getGenre(temp);
         }
         holder.country.setText(genre);
-        holder.thumnail.setImageBitmap(data.poster);
+        Glide.with(holder.itemView).load(data.posterUrl).into(holder.thumnail);
     }
 
     @Override
