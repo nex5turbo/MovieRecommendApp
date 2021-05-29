@@ -1,5 +1,12 @@
 # MovieRecommendApp
 
+## 결과화면
+![Screenshot_20210530-000259_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075039-a646e680-c0da-11eb-8f82-78097aba403b.jpg)
+![Screenshot_20210530-000308_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075042-a810aa00-c0da-11eb-8202-e1097514adc9.jpg)
+![Screenshot_20210530-000313_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075043-a810aa00-c0da-11eb-9d99-e52d1e7a484e.jpg)
+![Screenshot_20210530-000320_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075047-a9da6d80-c0da-11eb-9938-ade83cb59e91.jpg)
+
+
 ## Naver Movie API
 하나만 짚고 넘어가겠다. JSON 받아와서 영화 포스터 이미지를 추출하려고 할 때,    
 java.net.MalformedURLException: no protocol 에러가 뜨는 상황이 발생한다.    
