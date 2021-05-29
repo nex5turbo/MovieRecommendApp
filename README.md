@@ -1,10 +1,10 @@
 # MovieRecommendApp
 
 ## 결과화면
-![Screenshot_20210530-000259_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075039-a646e680-c0da-11eb-8f82-78097aba403b.jpg)
-![Screenshot_20210530-000308_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075042-a810aa00-c0da-11eb-8202-e1097514adc9.jpg)
-![Screenshot_20210530-000313_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075043-a810aa00-c0da-11eb-9d99-e52d1e7a484e.jpg)
-![Screenshot_20210530-000320_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075047-a9da6d80-c0da-11eb-9938-ade83cb59e91.jpg)
+![Screenshot_20210530-000259_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075099-ed34dc00-c0da-11eb-808e-dc0d3e473f94.jpg)
+![Screenshot_20210530-000308_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075102-edcd7280-c0da-11eb-9cf9-b8ea48a50528.jpg)
+![Screenshot_20210530-000313_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075103-ee660900-c0da-11eb-9f30-25dca0ef4bb1.jpg)
+![Screenshot_20210530-000320_MovieRecommend](https://user-images.githubusercontent.com/50979183/120075104-eefe9f80-c0da-11eb-9afb-48cfc0362536.jpg)
 
 
 ## Naver Movie API
